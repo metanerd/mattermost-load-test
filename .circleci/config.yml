@@ -109,7 +109,7 @@ workflows:
 #          loadtest-binary: https://releases.mattermost.com/loadtest-pr/${CIRCLE_BRANCH}/mattermost-load-test.tar.gz
           loadtest-binary: https://releases.mattermost.com/mattermost-load-test/mattermost-load-test.tar.gz
           docker-tag: ${CIRCLE_TAG}
-          context: matterbuild-docker
+#          context: matterbuild-docker
           <<: *only_branches
 #          requires:
 #            - deploy-branches
