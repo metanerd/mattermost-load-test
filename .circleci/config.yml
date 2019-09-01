@@ -84,17 +84,17 @@ jobs:
       - run:
           command: >
             docker build
-            --build-arg MM_BINARY=${<< parameters.mm-binary >>}
-            --build-arg LOADTEST_BINARY=${<< parameters.loadtest-binary >>}
-            -t mattermost/mattermost-loadtest:${<< parameters.docker-tag >>}
+            --build-arg MM_BINARY=<< parameters.mm-binary >>
+            --build-arg LOADTEST_BINARY=<< parameters.loadtest-binary >>
+            -t mattermost/mattermost-loadtest:<< parameters.docker-tag >>
             .
             --no-cache
       - run:
           command: |
             docker login --username ${DOCKER_USER} --password ${DOCKER_PASS}
-            docker push metanerd/load-test:${<< parameters.docker-tag >>}
+            docker push metanerd/load-test:<< parameters.docker-tag >>
             docker logout
-            docker rmi -f metanerd/load-test:${<< parameters.docker-tag >>}
+            docker rmi -f metanerd/load-test:<< parameters.docker-tag >>
 
 workflows:
   version: 2
