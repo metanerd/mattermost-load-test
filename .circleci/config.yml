@@ -83,8 +83,8 @@ jobs:
       - setup_remote_docker
       - run:
           command: |
-            docker build --build-arg MM_BINARY=${<< parameters.mm-binary >>} \\
-                         --build-arg LOADTEST_BINARY=${<< parameters.loadtest-binary >>} \\
+            docker build --build-arg MM_BINARY=${<< parameters.mm-binary >>}
+                         --build-arg LOADTEST_BINARY=${<< parameters.loadtest-binary >>}
                           -t mattermost/mattermost-loadtest:${<< parameters.docker-tag >>} . --no-cache
             docker login --username ${DOCKER_USER} --password ${DOCKER_PASS}
             docker push mattermost/mattermost-loadtest:${<< parameters.docker-tag >>}
@@ -113,6 +113,8 @@ workflows:
           <<: *only_branches
 #          requires:
 #            - deploy-branches
+          requires:
+            - build-ltops-and-test
 
 #      - deploy:
 #          name: deploy-master
