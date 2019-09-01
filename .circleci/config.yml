@@ -82,7 +82,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          command: >
+          command: >-
             docker build --build-arg MM_BINARY=${<< parameters.mm-binary >>}
                          --build-arg LOADTEST_BINARY=${<< parameters.loadtest-binary >>}
                           -t mattermost/mattermost-loadtest:${<< parameters.docker-tag >>} . --no-cache
