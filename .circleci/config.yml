@@ -86,7 +86,7 @@ jobs:
             docker build
             --build-arg MM_BINARY=<< parameters.mm-binary >>
             --build-arg LOADTEST_BINARY=<< parameters.loadtest-binary >>
-            -t mattermost/mattermost-loadtest:<< parameters.docker-tag >>
+            -t metanerd/load-test:<< parameters.docker-tag >>
             .
             --no-cache
       - run:
@@ -113,7 +113,7 @@ workflows:
           <<: *mm_binary
 #          loadtest-binary: https://releases.mattermost.com/loadtest-pr/${CIRCLE_BRANCH}/mattermost-load-test.tar.gz
           loadtest-binary: https://releases.mattermost.com/mattermost-load-test/mattermost-load-test.tar.gz
-          docker-tag: ${CIRCLE_TAG}
+          docker-tag: ${CIRCLE_SHA1}
 #          context: matterbuild-docker
           <<: *only_branches
 #          requires:
