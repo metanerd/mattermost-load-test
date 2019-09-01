@@ -97,50 +97,51 @@ workflows:
     jobs:
       - build-ltops-and-test
 
-      - deploy:
-          name: deploy-branches
-          s3-sync-to: s3://releases.mattermost.com/loadtest-pr/${CIRCLE_BRANCH}/
-          context: mattermost-ci-s3
-          requires:
-            - build-ltops-and-test
-          <<: *only_branches
+#      - deploy:
+#          name: deploy-branches
+#          s3-sync-to: s3://releases.mattermost.com/loadtest-pr/${CIRCLE_BRANCH}/
+#          context: mattermost-ci-s3
+#          requires:
+#            - build-ltops-and-test
+#          <<: *only_branches
       - build-docker:
           <<: *mm_binary
-          loadtest-binary: https://releases.mattermost.com/loadtest-pr/${CIRCLE_BRANCH}/mattermost-load-test.tar.gz
-          docker-tag: ${CIRCLE_TAG}
-          context: matterbuild-docker
-          <<: *only_branches
-          requires:
-            - deploy-branches
-
-      - deploy:
-          name: deploy-master
-          s3-sync-to: s3://releases.mattermost.com/mattermost-load-test/
-          context: mattermost-ci-s3
-          <<: *only_master
-          requires:
-            - build-ltops-and-test
-      - build-docker:
-          <<: *mm_binary
+#          loadtest-binary: https://releases.mattermost.com/loadtest-pr/${CIRCLE_BRANCH}/mattermost-load-test.tar.gz
           loadtest-binary: https://releases.mattermost.com/mattermost-load-test/mattermost-load-test.tar.gz
-          docker-tag: master
-          context: matterbuild-docker
-          <<: *only_master
-          requires:
-            - deploy-master
-
-      - deploy:
-          name: deploy-tags
-          s3-sync-to: s3://releases.mattermost.com/mattermost-load-test/${CIRCLE_TAG}/
-          context: mattermost-ci-s3
-          <<: *only_v_tags
-          requires:
-            - build-ltops-and-test
-      - build-docker:
-          <<: *mm_binary
-          loadtest-binary: https://releases.mattermost.com/mattermost-load-test/${CIRCLE_TAG}/mattermost-load-test.tar.gz
           docker-tag: ${CIRCLE_TAG}
           context: matterbuild-docker
-          <<: *only_v_tags
-          requires:
-            - deploy-tags
+          <<: *only_branches
+#          requires:
+#            - deploy-branches
+
+#      - deploy:
+#          name: deploy-master
+#          s3-sync-to: s3://releases.mattermost.com/mattermost-load-test/
+#          context: mattermost-ci-s3
+#          <<: *only_master
+#          requires:
+#            - build-ltops-and-test
+#      - build-docker:
+#          <<: *mm_binary
+#          loadtest-binary: https://releases.mattermost.com/mattermost-load-test/mattermost-load-test.tar.gz
+#          docker-tag: master
+#          context: matterbuild-docker
+#          <<: *only_master
+#          requires:
+#            - deploy-master
+#
+#      - deploy:
+#          name: deploy-tags
+#          s3-sync-to: s3://releases.mattermost.com/mattermost-load-test/${CIRCLE_TAG}/
+#          context: mattermost-ci-s3
+#          <<: *only_v_tags
+#          requires:
+#            - build-ltops-and-test
+#      - build-docker:
+#          <<: *mm_binary
+#          loadtest-binary: https://releases.mattermost.com/mattermost-load-test/${CIRCLE_TAG}/mattermost-load-test.tar.gz
+#          docker-tag: ${CIRCLE_TAG}
+#          context: matterbuild-docker
+#          <<: *only_v_tags
+#          requires:
+#            - deploy-tags
